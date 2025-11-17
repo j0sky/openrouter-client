@@ -165,8 +165,13 @@ $messages = [
 
 foreach ($client->chatStream('openai/gpt-4o', $messages) as $event) {
     // $event содержит полный объект ответа от API
-    if (isset($event['choices'][0]['delta']['content'])) {
-        echo $event['choices'][0]['delta']['content'];
+    $textDelta = $event['output_text_delta']
+        ?? ($event['output_text'] ?? null)
+        ?? ($event['output'][0]['content'][0]['text'] ?? null)
+        ?? ($event['choices'][0]['delta']['content'] ?? null); // для совместимости со старыми форматами
+
+    if ($textDelta !== null) {
+        echo $textDelta;
         flush();
     }
 }

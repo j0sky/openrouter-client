@@ -21,11 +21,11 @@ class Client
 
     /**
      * @param string $apiKey Your OpenRouter API key
-     * @param string|null $baseUri Optional custom base URI (defaults to https://openrouter.ai/api/v1)
+     * @param string|null $baseUri Optional custom base URI (defaults to https://openrouter.ai)
      */
     public function __construct(string $apiKey, ?string $baseUri = null)
     {
-        $this->httpClient = new HttpClient($apiKey, $baseUri ?? 'https://openrouter.ai/api/v1');
+        $this->httpClient = new HttpClient($apiKey, $baseUri ?? 'https://openrouter.ai/');
     }
 
     /**
@@ -38,7 +38,7 @@ class Client
      */
     public function responses(ResponsesRequest $request): ResponsesResponse
     {
-        $data = $this->httpClient->post('/responses', $request->jsonSerialize());
+        $data = $this->httpClient->post('/api/v1/responses', $request->jsonSerialize());
         return ResponsesResponse::fromArray($data);
     }
 
@@ -117,7 +117,7 @@ class Client
             providerOptions: $options['providerOptions'] ?? []
         );
 
-        foreach ($this->httpClient->postStream('/responses', $request->jsonSerialize()) as $event) {
+        foreach ($this->httpClient->postStream('/api/v1/responses', $request->jsonSerialize()) as $event) {
             yield $event;
         }
     }

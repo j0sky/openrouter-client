@@ -69,8 +69,13 @@ try {
     
     echo "Ответ (streaming): ";
     foreach ($client->chatStream('openai/gpt-3.5-turbo', 'Сосчитай от 1 до 5') as $event) {
-        if (isset($event['choices'][0]['delta']['content'])) {
-            echo $event['choices'][0]['delta']['content'];
+        $textDelta = $event['output_text_delta']
+            ?? ($event['output_text'] ?? null)
+            ?? ($event['output'][0]['content'][0]['text'] ?? null)
+            ?? ($event['choices'][0]['delta']['content'] ?? null);
+
+        if ($textDelta !== null) {
+            echo $textDelta;
             flush();
         }
     }
