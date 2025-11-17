@@ -1,0 +1,27 @@
+{
+    "name": "j0sky/openrouter-client",
+    "description": "PHP Client for OpenRouter API",
+    "type": "library",
+    "license": "MIT",
+    "require": {
+        "php": "^8.0",
+        "guzzlehttp/guzzle": "^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^10.0",
+        "phpstan/phpstan": "^1.10"
+    },
+    "autoload": {
+        "psr-4": {
+            "OpenRouter\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "OpenRouter\\Tests\\": "tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
+
